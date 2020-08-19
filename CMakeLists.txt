@@ -60,6 +60,10 @@ include(GNUInstallDirs)
 set(CMAKE_MACOSX_RPATH 1)
 #set(CMAKE_INSTALL_RPATH "${MY_CMAKE_RPATH}")
 
+## cpp
+
+add_subdirectory(src/cpp)
+
 # summary
 
 include(cmake/summary.cmake)
