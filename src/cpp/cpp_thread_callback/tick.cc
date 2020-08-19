@@ -22,17 +22,17 @@ bool Tick::IsRunning() const {
 }
 
 void Tick::Start() {
-  if (is_running_.load()) Stop();
+  if (is_running_) Stop();
   is_running_ = true;
   time_start_ = clock::now();
   thread_ = std::thread(&Tick::Run, this);
 }
 
-void Tick::Stop() {
-  if (!is_running_.load()) return;
+void Tick::Stop(bool wait_life_over) {
+  if (!is_running_) return;
   is_running_ = false;
-  if (thread_.joinable()) {
-    thread_.join();
+  if (wait_life_over) {
+    WaitLifeOver();
   }
 }
 
@@ -87,7 +87,7 @@ void Tick::Run() {
   auto tick_beg = time_start_;
   auto tick_duration = milliseconds(tick_ms_);
 
-  while (is_running_.load()) {
+  while (is_running_) {
     auto time_elapsed_ms = duration_cast<milliseconds>(
         clock::now() - time_start_).count();
     if (time_elapsed_ms > life_ms_) {
@@ -95,9 +95,8 @@ void Tick::Run() {
       break;
     }
 
-    if (!is_running_.load()) break;
     OnTickEvent(time_elapsed_ms);
-    if (!is_running_.load()) break;
+    if (!is_running_) break;
 
     auto tick_end_actual = clock::now();
     auto tick_end_expected = tick_beg + tick_duration;

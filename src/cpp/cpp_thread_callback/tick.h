@@ -24,7 +24,7 @@ class Tick {
   bool IsRunning() const;
 
   void Start();
-  void Stop();
+  void Stop(bool wait_life_over = false);
 
   const std::chrono::time_point<clock> &GetTimeStart() const;
 
@@ -53,7 +53,7 @@ class Tick {
   TickRunCallback run_beg_;
   TickRunCallback run_end_;
 
-  std::atomic<bool> is_running_;
+  std::atomic_bool is_running_;
   std::thread thread_;
 
   std::chrono::time_point<clock> time_start_;
