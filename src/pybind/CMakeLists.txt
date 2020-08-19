@@ -58,3 +58,4 @@ endmacro()
 # targets
 
 add_subdirectory(${MY_CURR}/first_steps)
+add_subdirectory(${MY_CURR}/cpp_thread_callback)
