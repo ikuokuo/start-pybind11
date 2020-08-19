@@ -67,3 +67,5 @@ add_subdirectory(src/cpp)
 # summary
 
 include(cmake/summary.cmake)
+
+configure_file(setup.bash.in ${MY_ROOT}/setup.bash @ONLY)

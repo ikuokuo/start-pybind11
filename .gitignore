@@ -5,6 +5,8 @@ _install/
 _output/
 _deploy/
 
+/setup.bash
+
 /log/
 /*INFO*
 /*WARNING*
