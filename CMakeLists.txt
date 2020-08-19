@@ -52,6 +52,8 @@ set_outdir(
 )
 
 include_directories(
+  include
+  src
 )
 
 include(CMakePackageConfigHelpers)
@@ -63,6 +65,12 @@ set(CMAKE_MACOSX_RPATH 1)
 ## cpp
 
 add_subdirectory(src/cpp)
+
+## pybind
+
+if(BUILD_PYTHON_BINDINGS)
+  add_subdirectory(src/pybind)
+endif()
 
 # summary
 
