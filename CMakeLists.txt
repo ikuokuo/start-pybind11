@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 project(start-pybind11 VERSION 0.1.0 LANGUAGES C CXX)
 
 include(cmake/global.cmake)
@@ -40,6 +40,7 @@ LIST(APPEND CMAKE_MODULE_PATH "${MY_ROOT}/cmake/modules")
 
 ## threads
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 # targets

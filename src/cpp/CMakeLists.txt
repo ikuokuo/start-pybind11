@@ -20,13 +20,14 @@ macro(add_my_executable NAME)
     add_executable(${NAME} ${THIS_SRCS})
   endif()
 
-  if(THIS_LIBS)
-    target_link_libraries(${NAME} ${THIS_LIBS})
+  set(__libs ${THIS_LIBS})
+  if(THIS_THREAD)
+    list(APPEND __libs Threads::Threads)
   endif()
-
-  if(THIS_THREAD AND THREADS_HAVE_PTHREAD_ARG)
-    target_compile_options(${NAME} PUBLIC "-pthread")
+  if(__libs)
+    target_link_libraries(${NAME} PUBLIC ${__libs})
   endif()
+  unset(__libs)
 endmacro()
 
 # add_my_library(NAME [SRCS srcs] [LIBS libs] [SHARED] [THREAD])
@@ -53,14 +54,16 @@ macro(add_my_library NAME)
     endif()
     add_library(${NAME} ${__lib_type} ${THIS_SRCS})
   endif()
+  unset(__lib_type)
 
-  if(THIS_LIBS)
-    target_link_libraries(${NAME} PUBLIC ${THIS_LIBS})
+  set(__libs ${THIS_LIBS})
+  if(THIS_THREAD)
+    list(APPEND __libs Threads::Threads)
   endif()
-
-  if(THIS_THREAD AND THREADS_HAVE_PTHREAD_ARG)
-    target_compile_options(${NAME} PUBLIC "-pthread")
+  if(__libs)
+    target_link_libraries(${NAME} PUBLIC ${__libs})
   endif()
+  unset(__libs)
 
   target_compile_definitions(${NAME} PRIVATE MY_EXPORTS)
 
@@ -70,7 +73,6 @@ macro(add_my_library NAME)
       SOVERSION "${MY_VERSION_MAJOR}.${MY_VERSION_MINOR}"
     )
   endif()
-  unset(__lib_type)
 endmacro()
 
 # targets
