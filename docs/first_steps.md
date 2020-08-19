@@ -5,6 +5,7 @@
 ### pybind11
 
 ```bash
+cd start-pybind11/
 git submodule update --init
 
 # git submodule add https://github.com/pybind/pybind11.git src/pybind/third_party/pybind11-2.5.0
@@ -21,6 +22,12 @@ CMake Error at src/pybind/CMakeLists.txt:4 (add_subdirectory):
   When specifying an out-of-tree source a binary directory must be explicitly
   specified.
 -->
+
+## Coding
+
+* [first_steps.h](../src/cpp/first_steps/first_steps.h)
+* [first_steps.cc](../src/cpp/first_steps/first_steps.cc)
+* [first_steps_pb.cc](../src/pybind/first_steps/first_steps_pb.cc)
 
 ## Build
 
