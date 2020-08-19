@@ -5,3 +5,4 @@
 ## Tutorials
 
 * [First Steps](docs/first_steps.md)
+* [C++ Thread Callback Python Function](docs/cpp_thread_callback_python_function.md)

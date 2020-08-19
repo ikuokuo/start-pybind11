@@ -5,7 +5,7 @@
 ### pybind11
 
 ```bash
-git submodule update --init --recursive
+git submodule update --init
 
 # git submodule add https://github.com/pybind/pybind11.git src/pybind/third_party/pybind11-2.5.0
 # cd src/pybind/third_party/pybind11-2.5.0/
