@@ -3,21 +3,26 @@
 _libdir=@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@
 
 path_add() {
-  path="$1"
-  if [ "$(uname)" == "Darwin" ]; then  # macOS
-    export DYLD_LIBRARY_PATH=$path:$DYLD_LIBRARY_PATH
+  p="$1"
+  if [[ "$(uname)" == "Darwin" ]]; then  # macOS
+    export DYLD_LIBRARY_PATH=$p${DYLD_LIBRARY_PATH:+:${DYLD_LIBRARY_PATH}}
   else  # Linux
-    export LD_LIBRARY_PATH=$path:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=$p${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
   fi
-  export PYTHONPATH=$path:$PYTHONPATH
-  echo "+ $path"
+  export PYTHONPATH=$p${PYTHONPATH:+:${PYTHONPATH}}
+  echo "+ $p"
 }
 
-echo "LD_LIBRARY_PATH, PYTHONPATH"
-if [ $# -eq 0 ]; then
+if [[ "$(uname)" == "Darwin" ]]; then
+  echo "DYLD_LIBRARY_PATH, PYTHONPATH"
+else
+  echo "LD_LIBRARY_PATH, PYTHONPATH"
+fi
+
+if (( $# == 0 )); then
   path_add "$_libdir"
 else
-  for path in "$@"; do
-    path_add "$_libdir/$path"
+  for p in "$@"; do
+    path_add "$_libdir/$p"
   done
 fi
