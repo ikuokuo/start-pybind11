@@ -10,12 +10,12 @@ int main(int argc, char const *argv[]) {
 
   tick.SetTickEvent([&tick](std::int64_t elapsed_ms) {
     std::cout << "elapsed: " << elapsed_ms << " ms" << std::endl;
-    if (elapsed_ms >= 2000) {
+    if (elapsed_ms >= 3000) {
       tick.Stop();
     }
   });
 
-  tick.Start();
+  tick.Start(1000);
   tick.WaitLifeOver();
   return 0;
 }

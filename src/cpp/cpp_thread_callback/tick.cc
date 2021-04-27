@@ -21,11 +21,11 @@ bool Tick::IsRunning() const {
   return is_running_;
 }
 
-void Tick::Start() {
+void Tick::Start(std::int64_t delay_ms) {
   if (is_running_) Stop();
   is_running_ = true;
   time_start_ = clock::now();
-  thread_ = std::thread(&Tick::Run, this);
+  thread_ = std::thread(&Tick::Run, this, delay_ms);
 }
 
 void Tick::Stop(bool wait_life_over) {
@@ -79,12 +79,16 @@ void Tick::OnTickEvent(std::int64_t elapsed_ms) {
 void Tick::OnLifeOver(std::int64_t /*elapsed_ms*/) {
 }
 
-void Tick::Run() {
-  if (run_beg_) run_beg_();
-
+void Tick::Run(std::int64_t delay_ms) {
   using namespace std::chrono;  // NOLINT
 
-  auto tick_beg = time_start_;
+  if (delay_ms > 0) {
+    std::this_thread::sleep_for(milliseconds(delay_ms));
+  }
+
+  if (run_beg_) run_beg_();
+
+  auto tick_beg = clock::now();
   auto tick_duration = milliseconds(tick_ms_);
 
   while (is_running_) {

@@ -23,7 +23,7 @@ class Tick {
 
   bool IsRunning() const;
 
-  void Start();
+  void Start(std::int64_t delay_ms = 0);
   void Stop(bool wait_life_over = false);
 
   const std::chrono::time_point<clock> &GetTimeStart() const;
@@ -43,7 +43,7 @@ class Tick {
   virtual void OnTickEvent(std::int64_t elapsed_ms);
   virtual void OnLifeOver(std::int64_t elapsed_ms);
 
-  void Run();
+  void Run(std::int64_t delay_ms);
 
   TickEvent tick_event_;
 
